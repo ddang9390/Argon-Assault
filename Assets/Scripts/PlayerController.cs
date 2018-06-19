@@ -19,10 +19,12 @@ public class PlayerController : MonoBehaviour {
 
     float yThrow, xThrow;
     bool isDead = false;
+
+    ScoreBoard scoreBoard;
     // Use this for initialization
     void Start () {
-		
-	}
+        scoreBoard = FindObjectOfType<ScoreBoard>();
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -31,7 +33,10 @@ public class PlayerController : MonoBehaviour {
         {
             ProcessTranslation();
             ProcessRotation();
+
+            scoreBoard.gainPointsWhileAlive();
         }
+
     }
 
     // Handles translation of ship
