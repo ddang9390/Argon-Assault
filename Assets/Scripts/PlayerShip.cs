@@ -26,6 +26,7 @@ public class PlayerShip : MonoBehaviour {
         ProcessRotation();
     }
 
+    // Handles translation of ship
     private void ProcessTranslation()
     {
         float xOffset;
@@ -36,16 +37,17 @@ public class PlayerShip : MonoBehaviour {
 
         xOffset = xSpeed * xThrow * Time.deltaTime;
         float newXPos = transform.localPosition.x + xOffset;
-        float trueXPos = Mathf.Clamp(newXPos, -xRange, xRange);
+        float trueXPos = Mathf.Clamp(newXPos, -xRange, xRange); // Keeps ship within screen's x-range
 
         
         yOffset = xSpeed * yThrow * Time.deltaTime;
         float newYPos = transform.localPosition.y + yOffset;
-        float trueYPos = Mathf.Clamp(newYPos, -yRange, yRange);
+        float trueYPos = Mathf.Clamp(newYPos, -yRange, yRange); // Keeps ship within screen's y-range
 
         transform.localPosition = new Vector3(trueXPos, trueYPos, transform.localPosition.z);
     }
 
+    // Handles rotation of ship
     private void ProcessRotation()
     {
         float pitch = transform.localPosition.y * positionPitchFactor + yThrow * controlPitchFactor;
@@ -53,5 +55,15 @@ public class PlayerShip : MonoBehaviour {
         float roll = xThrow * controlRollFactor;
 
         transform.localRotation = Quaternion.Euler(pitch, yaw, roll);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("I'm hit");
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("trigger");
     }
 }
