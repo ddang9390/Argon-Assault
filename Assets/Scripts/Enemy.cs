@@ -7,6 +7,8 @@ public class Enemy : MonoBehaviour {
     [SerializeField] Transform parent;
 
     [SerializeField] int scorePerHit = 1000;
+    [SerializeField] int health = 3;
+
     ScoreBoard scoreBoard;
 
     // Use this for initialization
@@ -24,12 +26,14 @@ public class Enemy : MonoBehaviour {
 
     private void OnParticleCollision(GameObject other)
     {
-        scoreBoard.gainPoints(scorePerHit);
-
-        GameObject fx = Instantiate(deathFX, transform.position, Quaternion.identity);
-        fx.transform.parent = parent;
-
-        Destroy(gameObject);
+        health--;
+        if (health <= 0)
+        {
+            scoreBoard.gainPoints(scorePerHit);
+            GameObject fx = Instantiate(deathFX, transform.position, Quaternion.identity);
+            fx.transform.parent = parent;
+            Destroy(gameObject);
+        }
     }
 
 }

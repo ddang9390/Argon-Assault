@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] float controlPitchFactor = -20f;
     [SerializeField] float controlRollFactor = -20f;
 
+    [SerializeField] ParticleSystem[] guns = null;
     float yThrow, xThrow;
     bool isDead = false;
 
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour {
         {
             ProcessTranslation();
             ProcessRotation();
+            ProcessFiring();
 
             scoreBoard.gainPointsWhileAlive();
         }
@@ -68,6 +70,26 @@ public class PlayerController : MonoBehaviour {
         float roll = xThrow * controlRollFactor;
 
         transform.localRotation = Quaternion.Euler(pitch, yaw, roll);
+    }
+
+    private void ProcessFiring()
+    {
+        if (CrossPlatformInputManager.GetButton("Fire"))
+        {
+            foreach(ParticleSystem gun in guns)
+            {
+                var g = gun.emission;
+                g.enabled = true;
+            }
+        }
+        else
+        {
+            foreach (ParticleSystem gun in guns)
+            {
+                var g = gun.emission;
+                g.enabled = false;
+            }
+        }
     }
 
     private void OnPlayerDeath()
