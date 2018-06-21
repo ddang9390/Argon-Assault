@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour {
     [SerializeField] GameObject deathFX;
     [SerializeField] Transform parent;
 
-    [SerializeField] int scorePerHit = 1000;
+    [SerializeField] int scorePerKill = 1000;
     [SerializeField] int health = 3;
 
     ScoreBoard scoreBoard;
@@ -29,7 +29,7 @@ public class Enemy : MonoBehaviour {
         health--;
         if (health <= 0)
         {
-            scoreBoard.gainPoints(scorePerHit);
+            scoreBoard.gainPoints(scorePerKill);
             GameObject fx = Instantiate(deathFX, transform.position, Quaternion.identity);
             fx.transform.parent = parent;
             Destroy(gameObject);
